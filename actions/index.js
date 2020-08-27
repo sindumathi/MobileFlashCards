@@ -16,9 +16,9 @@ export function addDeck(deck) {
   };
 }
 
-export function addCard(questionDetails) {
+export function addCard(questions) {
   return {
     type: ADD_CARD,
-    questionDetails,
+    questions,
   };
 }

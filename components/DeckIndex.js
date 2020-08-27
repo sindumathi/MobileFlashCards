@@ -31,6 +31,14 @@ const StartQuiz = ({ onPress }) => {
     </TouchableOpacity>
   );
 };
+
+const AddNewDeck = ({ onPress }) => {
+  return (
+    <TouchableOpacity style={styles.submitButton} onPress={onPress}>
+      <Text style={styles.submitButtonText}>Add Deck</Text>
+    </TouchableOpacity>
+  );
+};
 class DeckIndex extends Component {
   componentDidMount() {
     const { dispatch } = this.props;

@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = (decks, ownProps) => {
   const deck = decks[ownProps.id];
-  const totalCards = deck && deck.questions.length;
+  const totalCards = (deck && deck.questions && deck.questions.length) || 0;
   console.log(deck);
   return {
     deck,

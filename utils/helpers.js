@@ -3,11 +3,14 @@ import { Notifications, Permissions } from 'expo';
 
 const NOTIFICATION_KEY = 'MobileFlashCards:notifications';
 
-export function generateUID() {
-  return (
-    Math.random().toString(36).substring(2, 15) +
-    Math.random().toString(36).substring(2, 15)
-  );
+export function generateID(id) {
+  return id
+    .trim()
+    .split(' ')
+    .map((word) => {
+      return word[0].toUpperCase() + word.slice(1);
+    })
+    .join('');
 }
 
 export function clearLocalNotification() {

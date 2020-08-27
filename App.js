@@ -7,6 +7,7 @@ import reducer from './reducers';
 
 import DeckIndex from './components/DeckIndex';
 import AddCard from './components/AddCard';
+import AddDeck from './components/AddDeck';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
       <View style={styles.container}>
         <DeckIndex />
         <AddCard />
+        <AddDeck />
         <StatusBar style='auto' />
       </View>
     </Provider>
