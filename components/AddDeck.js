@@ -36,6 +36,7 @@ class AddDeck extends React.Component {
     dispatch(addDeck(deckId, deckInfo));
     saveDeck(deckId, deckInfo);
     this.setState({ deckName: '', errorMessage: '' });
+    this.props.navigation.navigate('DeckIndex');
   };
 
   render() {
@@ -70,17 +71,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: yellow,
     marginBottom: 10,
-    justifyContent: 'center',
     alignItems: 'center',
     minHeight: 100,
     minWidth: 320,
   },
   headerImage: {
-    flex: 1,
     minHeight: 100,
+    alignItems: 'center',
+    width: '100%',
   },
   labelText: {
-    fontsize: 22,
+    fontSize: 22,
     color: brown,
     marginBottom: 10,
   },

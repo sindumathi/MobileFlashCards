@@ -22,3 +22,12 @@ export function addCard(questions) {
     questions,
   };
 }
+/*
+export function handleAddDeck(deckId, deckInfo) {
+  const deck = { deckId, deckInfo };
+  return (dispatch) => {
+    return saveDeck(deckId, deckInfo).then((deck) => {
+      dispatch(addDeck(deck));
+    });
+  };
+}*/

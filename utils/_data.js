@@ -51,5 +51,5 @@ function setInitialData() {
 
 export function formatDecksResults(results) {
   return results === null ? setInitialData() : JSON.parse(results);
-  // setInitialData();
+  //setInitialData();
 }

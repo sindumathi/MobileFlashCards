@@ -13,24 +13,8 @@ import {
   Animated,
   Image,
 } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { yellow, brown, white } from '../utils/colors';
-
-const AddCardButton = ({ onPress }) => {
-  return (
-    <TouchableOpacity style={styles.submitButton} onPress={onPress}>
-      <Text style={styles.submitButtonText}>Add card</Text>
-    </TouchableOpacity>
-  );
-};
-
-const StartQuiz = ({ onPress }) => {
-  return (
-    <TouchableOpacity style={styles.submitButton} onPress={onPress}>
-      <Text style={styles.submitButtonText}>StartQuiz</Text>
-    </TouchableOpacity>
-  );
-};
 
 const AddNewDeck = ({ onPress }) => {
   return (
@@ -46,20 +30,15 @@ class DeckIndex extends Component {
       .then((decks) => dispatch(receiveDecks(decks)))
       .then(() => this.setState(() => ({ loading: false })));
   }
-  //Add cards
-  addCards = () => {
-    //go to add cards page
-  };
-  //Start quiz
-  startQuiz = () => {};
 
   render() {
-    const { decks } = this.props;
+    const { decks, navigation } = this.props;
     console.log(decks);
     console.log(
       Object.keys(decks).map((id) => {
         console.log('-------------');
         console.log(decks[id].title);
+        console.log(navigation);
         console.log('-------------');
       })
     );
@@ -76,11 +55,15 @@ class DeckIndex extends Component {
             return <Deck id={id} />;
           })}
         </ScrollView>
-        <TouchableOpacity>
-          <View style={styles.submitButtonContainer}>
-            <AddCardButton onPress={'#'} />
-            <StartQuiz onPress={'#'} />
-          </View>
+        <TouchableOpacity style={styles.addIconContainer}>
+          <Ionicons
+            name='md-add-circle'
+            size={60}
+            color={brown}
+            style={styles.addIcon}
+            onPress={() => navigation.navigate('AddDeck')}
+          />
+          {}
         </TouchableOpacity>
       </View>
     );
@@ -91,6 +74,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+  },
+  addIconContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
+  addIcon: {
+    marginTop: 10,
   },
   headerContianer: {
     flex: 1,
