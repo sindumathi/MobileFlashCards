@@ -43,8 +43,8 @@ class DeckIndex extends Component {
       })
     );
     return (
-      <View>
-        <ScrollView style={styles.container}>
+      <View style={styles.container}>
+        <ScrollView>
           <View style={styles.headerContianer}>
             <Image
               source={require('../assets/headerImage.png')}
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    height: '100%',
   },
   addIconContainer: {
     flex: 1,
@@ -90,7 +91,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: 100,
     minWidth: 320,
   },
   headerImage: {

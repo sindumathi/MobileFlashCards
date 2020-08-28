@@ -22,31 +22,44 @@ class DeckView extends Component {
   render() {
     const { deck, totalCards, outputText, id } = this.props;
     return (
-      <View style={styles.cardContainer}>
-        <Text style={styles.cardTitle}>{deck.title}</Text>
-        <Text style={styles.cardDate}>Posted on {deck.created}</Text>
-        <Text style={styles.totalCards}>{totalCards + ' ' + outputText} </Text>
-
-        <TouchableOpacity style={styles.submitButtonContainer}>
-          <AddCardButton
-            onPress={() => {
-              this.props.navigation.navigate('AddCard', {
-                deckId: id,
-              });
-            }}
-          />
-        </TouchableOpacity>
+      <View style={styles.container}>
+        <View style={styles.cardContainer}>
+          <Text style={styles.cardTitle}>{deck.title}</Text>
+          <Text style={styles.cardDate}>Posted on {deck.created}</Text>
+          <Text style={styles.totalCards}>
+            {totalCards + ' ' + outputText}{' '}
+          </Text>
+        </View>
+        <View>
+          <TouchableOpacity style={styles.submitButtonContainer}>
+            <AddCardButton
+              onPress={() => {
+                this.props.navigation.navigate('AddCard', {
+                  deckId: id,
+                });
+              }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.submitButtonContainer}>
+            <StartQuiz
+              onPress={() => {
+                this.props.navigation.navigate('Quiz', { deckId: id });
+              }}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
+  container: { flex: 1 },
   cardContainer: {
-    flex: 1,
     backgroundColor: brown,
     padding: 10,
     borderRadius: 10,
-    marginBottom: 10,
+    margin: 10,
+    marginTop: 20,
   },
   cardTitle: {
     fontSize: 22,
@@ -62,14 +75,26 @@ const styles = StyleSheet.create({
     color: white,
     fontSize: 18,
   },
+  submitButtonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  submitButton: {
+    backgroundColor: yellow,
+    padding: 10,
+    borderRadius: 5,
+    height: 45,
+    width: '60%',
+  },
+  submitButtonText: {
+    color: white,
+    fontSize: 22,
+    textAlign: 'center',
+  },
 });
 const mapStateToProps = (decks, ownProps) => {
   const { id } = ownProps.route.params;
   const deck = decks[id];
-  console.log('----------------');
-  console.log(ownProps);
-  console.log('deck' + id);
-  console.log('----------------');
   const totalCards = (deck && deck.questions && deck.questions.length) || 0;
   const outputText = totalCards > 1 ? 'flash cards' : 'flash card';
   console.log(deck);

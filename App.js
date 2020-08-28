@@ -16,6 +16,9 @@ import AddCard from './components/AddCard';
 import Deck from './components/Deck';
 import AddDeck from './components/AddDeck';
 import DeckView from './components/DeckView';
+import Quiz from './components/Quiz';
+
+const Tab = createBottomTabNavigator();
 
 const Stack = createStackNavigator();
 
@@ -32,22 +35,13 @@ export default function App() {
     <NavigationContainer>
       <Provider store={createStore(reducer)}>
         <DeckStatusBar backgroundColor={brown} barStyle='light-content' />
-        <Stack.Navigator
-          screenOptions={{
-            container: {
-              flex: 1,
-              backgroundColor: '#fff',
-              minWidth: 320,
-              alignItems: 'center',
-              justifyContent: 'center',
-            },
-          }}
-        >
+        <Stack.Navigator>
           <Stack.Screen name='DeckIndex' component={DeckIndex} />
           <Stack.Screen name='AddDeck' component={AddDeck} />
           <Stack.Screen name='Deck' component={Deck} />
           <Stack.Screen name='DeckView' component={DeckView} />
           <Stack.Screen name='AddCard' component={AddCard} />
+          <Stack.Screen name='Quiz' component={Quiz} />
         </Stack.Navigator>
       </Provider>
     </NavigationContainer>
