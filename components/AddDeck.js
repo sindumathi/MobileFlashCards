@@ -36,7 +36,7 @@ class AddDeck extends React.Component {
     dispatch(addDeck(deckId, deckInfo));
     saveDeck(deckId, deckInfo);
     this.setState({ deckName: '', errorMessage: '' });
-    this.props.navigation.navigate('DeckIndex');
+    this.props.navigation.navigate('DeckView', { id: deckId });
   };
 
   render() {
@@ -44,21 +44,27 @@ class AddDeck extends React.Component {
     console.log(errorMessage);
     return (
       <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
-        <View style={styles.headerContianer}>
-          <Image
-            source={require('../assets/headerAddDeck.png')}
-            style={styles.headerImage}
-          />
-        </View>
-        <Text style={styles.labelText}> Enter Deck name</Text>
-        <TextInput
-          value={deckName}
-          style={styles.input}
-          onChangeText={(deckName) => this.setState({ deckName })}
-        />
-        <Text style={styles.errorText}>{errorMessage}</Text>
-        <View style={styles.submitButtonContainer}>
-          <DeckSubmitButton onPress={this.onSubmit} />
+        <View style={styles.container}>
+          <View style={styles.headerContainer}>
+            <Image
+              source={require('../assets/headerAddDeck.png')}
+              style={styles.headerImage}
+            />
+          </View>
+          <View style={styles.contentContainer}>
+            <Text style={styles.labelText}> Enter Deck name</Text>
+            <TextInput
+              value={deckName}
+              style={styles.input}
+              onChangeText={(deckName) =>
+                this.setState({ deckName, errorMessage: '' })
+              }
+            />
+            <Text style={styles.errorText}>{errorMessage}</Text>
+          </View>
+          <View style={styles.submitButtonContainer}>
+            <DeckSubmitButton onPress={this.onSubmit} />
+          </View>
         </View>
       </KeyboardAvoidingView>
     );
@@ -66,17 +72,19 @@ class AddDeck extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  headerContianer: {
+  container: {
     flex: 1,
+    marginTop: 10,
+  },
+  headerContainer: {
     flexDirection: 'row',
-    backgroundColor: yellow,
     marginBottom: 10,
     alignItems: 'center',
     minHeight: 100,
     minWidth: 320,
   },
   headerImage: {
-    minHeight: 100,
+    minHeight: 90,
     alignItems: 'center',
     width: '100%',
   },
@@ -84,6 +92,9 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: brown,
     marginBottom: 10,
+  },
+  contentContainer: {
+    marginTop: 10,
   },
 
   input: {
@@ -94,7 +105,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   submitButtonContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

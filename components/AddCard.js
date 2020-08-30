@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {
   View,
   Text,
@@ -8,43 +8,70 @@ import {
   TextInput,
   Image,
 } from 'react-native';
-import { yellow, brown, white } from '../utils/colors';
+import { connect } from 'react-redux';
+import { yellow, brown, white, red } from '../utils/colors';
 
-const SubmitButton = ({ onPress }) => {
-  return (
-    <TouchableOpacity style={styles.submitButton} onPress={onPress}>
-      <Text style={styles.submitButtonText}>Add card</Text>
-    </TouchableOpacity>
-  );
-};
+import { addCard } from '../actions/index';
+import { addCardToDeck } from '../utils/api';
+import { YellowButton } from './Button';
 
 class AddCard extends Component {
-  state = { question: '', answer: '' };
-  render() {
+  state = { question: '', answer: '', errorMessage: '' };
+  onSubmit = () => {
     const { question, answer } = this.state;
+    const { dispatch, deck, navigation } = this.props;
+    const questionAnswer = {
+      deckId: deck.id,
+      question,
+      answer,
+    };
+    if (question === '' || answer === '') {
+      this.setState({
+        errorMessage: "Question or Answer Fields Can't be empty",
+      });
+    } else {
+      dispatch(addCard(questionAnswer));
+      addCardToDeck(questionAnswer);
+      navigation.navigate('DeckView', { id: deck.id });
+    }
+  };
+
+  render() {
+    const { question, answer, errorMessage } = this.state;
     return (
       <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
-        <View style={styles.headerContianer}>
-          <Image
-            source={require('../assets/headerAddCard.png')}
-            style={styles.headerImage}
-          />
-        </View>
-        <Text style={styles.labelText}> Question</Text>
-        <TextInput
-          value={question}
-          style={styles.input}
-          onChangeText={(question) => this.setState({ question })}
-          autoFocus={true}
-        />
-        <Text style={styles.labelText}>Answer</Text>
-        <TextInput
-          value={answer}
-          style={styles.input}
-          onChangeText={(answer) => this.setState({ answer })}
-        />
-        <View style={styles.submitButtonContainer}>
-          <SubmitButton onPress={this.submit} />
+        <View style={styles.container}>
+          <View style={styles.headerContainer}>
+            <Image
+              source={require('../assets/headerAddCard.png')}
+              style={styles.headerImage}
+            />
+          </View>
+
+          <View style={styles.contentContainer}>
+            <Text style={styles.labelText}> Question</Text>
+            <TextInput
+              value={question}
+              style={styles.input}
+              onChangeText={(question) =>
+                this.setState({ question, errorMessage: '' })
+              }
+              autoFocus={true}
+            />
+            <Text style={styles.labelText}>Answer</Text>
+            <TextInput
+              value={answer}
+              style={styles.input}
+              onChangeText={(answer) =>
+                this.setState({ answer, errorMessage: '' })
+              }
+            />
+            <Text style={styles.errorText}>{errorMessage}</Text>
+          </View>
+
+          <View style={styles.submitButtonContainer}>
+            <YellowButton onPress={this.onSubmit} buttonName={'Add Card'} />
+          </View>
         </View>
       </KeyboardAvoidingView>
     );
@@ -52,20 +79,27 @@ class AddCard extends Component {
 }
 
 const styles = StyleSheet.create({
-  headerContianer: {
+  container: {
     flex: 1,
+    marginTop: 10,
+  },
+  headerContainer: {
     flexDirection: 'row',
-    backgroundColor: yellow,
     marginBottom: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
     minHeight: 100,
+    alignItems: 'center',
     minWidth: 320,
   },
+
   headerImage: {
-    flex: 1,
-    minHeight: 100,
+    minHeight: 90,
+    alignItems: 'center',
+    width: '100%',
   },
+  contentContainer: {
+    marginTop: 20,
+  },
+
   labelText: {
     fontSize: 22,
     color: brown,
@@ -79,22 +113,27 @@ const styles = StyleSheet.create({
     borderColor: brown,
     marginBottom: 15,
   },
-  submitButtonContainer: {
+  addViewButton: {
     flex: 1,
-    justifyContent: 'center',
+    marginBottom: 'auto',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+  submitButtonContainer: {
     alignItems: 'center',
+    marginTop: 20,
   },
-  submitButton: {
-    backgroundColor: yellow,
+  errorText: {
+    color: red,
     padding: 10,
-    borderRadius: 5,
-    height: 45,
-    width: '60%',
-  },
-  submitButtonText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center',
   },
 });
-export default AddCard;
+
+const mapStateToProps = (decks, ownProps) => {
+  console.log('ownProps=============');
+  console.log(ownProps);
+  const deckId = ownProps.route.params.deckId;
+  const deck = decks[deckId];
+  return { deck };
+};
+export default connect(mapStateToProps)(AddCard);

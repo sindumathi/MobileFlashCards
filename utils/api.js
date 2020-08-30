@@ -2,22 +2,23 @@ import { AsyncStorage } from 'react-native';
 import { formatDecksResults, FLASH_CARDS_KEY } from './_data';
 
 export function getDecks() {
+  AsyncStorage.clear();
   return AsyncStorage.getItem(FLASH_CARDS_KEY).then(formatDecksResults);
 }
 
-export function saveDeck(key, deck) {
+export function saveDeck(deckId, deck) {
   return AsyncStorage.mergeItem(
     FLASH_CARDS_KEY,
     JSON.stringify({
-      [key]: deck,
+      [deckId]: deck,
     })
   );
 }
 
-export function saveCard(key, question, answer) {
+export function addCardToDeck({ deckId, question, answer }) {
   AsyncStorage.getItem(FLASH_CARDS_KEY).then((result) => {
     let decks = JSON.parse(result);
-    decks[key].questions.push({ question: question, answer: answer });
+    decks[deckId].questions.push({ question: question, answer: answer });
     AsyncStorage.mergeItem(FLASH_CARDS_KEY, JSON.stringify(decks));
   });
 }

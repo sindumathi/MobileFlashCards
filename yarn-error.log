@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\sindu\udacity\reactNative\mobileFlashCards\mobileFlashCards\node_modules\@babel\compat-data\node_modules\.bin'
+  Error: EPERM: operation not permitted, unlink 'C:\sindu\udacity\reactNative\mobileFlashCards\mobileFlashCards\node_modules\@babel\generator\node_modules\.bin'
 
 npm manifest: 
   {
@@ -41,7 +41,8 @@ npm manifest:
       "react-native-screens": "~2.9.0",
       "react-native-web": "~0.11.7",
       "react-redux": "^7.2.1",
-      "redux": "^4.0.5"
+      "redux": "^4.0.5",
+      "redux-thunk": "^2.3.0"
     },
     "devDependencies": {
       "@babel/core": "^7.8.6",
@@ -4691,6 +4692,11 @@ Lockfile:
       safe-buffer "~5.1.1"
       string_decoder "~1.1.1"
       util-deprecate "~1.0.1"
+  
+  redux-thunk@^2.3.0:
+    version "2.3.0"
+    resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
+    integrity sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
   
   redux@^4.0.5:
     version "4.0.5"

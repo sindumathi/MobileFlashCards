@@ -9,6 +9,7 @@ import {
   Text,
   StyleSheet,
   ScrollView,
+  FlatList,
   TouchableOpacity,
   Animated,
   Image,
@@ -16,55 +17,29 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { yellow, brown, white } from '../utils/colors';
 
-const AddNewDeck = ({ onPress }) => {
-  return (
-    <TouchableOpacity style={styles.submitButton} onPress={onPress}>
-      <Text style={styles.submitButtonText}>Add Deck</Text>
-    </TouchableOpacity>
-  );
-};
 class DeckIndex extends Component {
-  componentDidMount() {
-    const { dispatch } = this.props;
-    getDecks()
-      .then((decks) => dispatch(receiveDecks(decks)))
-      .then(() => this.setState(() => ({ loading: false })));
-  }
-
   render() {
     const { decks, navigation } = this.props;
-    console.log(decks);
-    console.log(
-      Object.keys(decks).map((id) => {
-        console.log('-------------');
-        console.log(decks[id].title);
-        console.log(navigation);
-        console.log('-------------');
-      })
-    );
     return (
       <View style={styles.container}>
         <ScrollView>
-          <View style={styles.headerContianer}>
+          <View style={styles.headerContainer}>
             <Image
               source={require('../assets/headerImage.png')}
               style={styles.headerImage}
             />
           </View>
+
+          {/*}  <FlatList
+          data={Object.keys(decks).map((id) => {
+            return { key: id };
+          })}
+          renderItem={({ item }) => <Deck key={item.key} id={item.key} />}
+        />*/}
           {Object.keys(decks).map((id) => {
-            return <Deck id={id} />;
+            return <Deck key={id} id={id} />;
           })}
         </ScrollView>
-        <TouchableOpacity style={styles.addIconContainer}>
-          <Ionicons
-            name='md-add-circle'
-            size={60}
-            color={brown}
-            style={styles.addIcon}
-            onPress={() => navigation.navigate('AddDeck')}
-          />
-          {}
-        </TouchableOpacity>
       </View>
     );
   }
@@ -74,7 +49,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    height: '100%',
+  },
+  headerContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: 320,
+  },
+  headerImage: {
+    flex: 1,
+    minHeight: 120,
+  },
+  contentContainer: {
+    marginTop: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: 320,
   },
   addIconContainer: {
     flex: 1,
@@ -84,19 +76,7 @@ const styles = StyleSheet.create({
   addIcon: {
     marginTop: 10,
   },
-  headerContianer: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: yellow,
-    marginBottom: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    minWidth: 320,
-  },
-  headerImage: {
-    flex: 1,
-    minHeight: 100,
-  },
+
   contentContainer: {
     flex: 1,
   },

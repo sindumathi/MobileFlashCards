@@ -1,50 +1,40 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { yellow, brown, white } from '../utils/colors';
+import { yellow, brown, white, blueGrey, indigo } from '../utils/colors';
+import { YellowButton } from './Button';
 
-const AddCardButton = ({ onPress }) => {
-  return (
-    <TouchableOpacity style={styles.submitButton} onPress={onPress}>
-      <Text style={styles.submitButtonText}>Add card</Text>
-    </TouchableOpacity>
-  );
-};
-
-const StartQuiz = ({ onPress }) => {
-  return (
-    <TouchableOpacity style={styles.submitButton} onPress={onPress}>
-      <Text style={styles.submitButtonText}>StartQuiz</Text>
-    </TouchableOpacity>
-  );
-};
 class DeckView extends Component {
   render() {
-    const { deck, totalCards, outputText, id } = this.props;
+    const { deck, totalCards, outputText, id, navigation } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.cardContainer}>
-          <Text style={styles.cardTitle}>{deck.title}</Text>
-          <Text style={styles.cardDate}>Posted on {deck.created}</Text>
-          <Text style={styles.totalCards}>
-            {totalCards + ' ' + outputText}{' '}
-          </Text>
+          <View style={styles.contentContainer}>
+            <Text style={styles.cardTitle}>{deck.title}</Text>
+            <Text style={styles.cardDate}>Posted on {deck.created}</Text>
+            <Text style={styles.totalCards}>
+              {totalCards + ' ' + outputText}{' '}
+            </Text>
+          </View>
         </View>
-        <View>
+        <View style={styles.deckViewButton}>
           <TouchableOpacity style={styles.submitButtonContainer}>
-            <AddCardButton
+            <YellowButton
               onPress={() => {
-                this.props.navigation.navigate('AddCard', {
+                navigation.navigate('AddCard', {
                   deckId: id,
                 });
               }}
+              buttonName={'Add Card'}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.submitButtonContainer}>
-            <StartQuiz
+            <YellowButton
               onPress={() => {
-                this.props.navigation.navigate('Quiz', { deckId: id });
+                navigation.navigate('Quiz', { deckId: id });
               }}
+              buttonName={'Start Quiz'}
             />
           </TouchableOpacity>
         </View>
@@ -61,35 +51,32 @@ const styles = StyleSheet.create({
     margin: 10,
     marginTop: 20,
   },
+  contentContainer: {
+    padding: 20,
+  },
   cardTitle: {
-    fontSize: 22,
-    padding: 10,
+    fontSize: 28,
     color: white,
   },
   cardDate: {
-    fontSize: 14,
-    fontStyle: 'italic',
+    fontSize: 12,
+    paddingBottom: 10,
     color: white,
   },
   totalCards: {
+    fontSize: 28,
     color: white,
-    fontSize: 18,
   },
   submitButtonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 20,
   },
-  submitButton: {
-    backgroundColor: yellow,
-    padding: 10,
-    borderRadius: 5,
-    height: 45,
-    width: '60%',
-  },
-  submitButtonText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center',
+  deckViewButton: {
+    flex: 1,
+    marginBottom: 'auto',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
   },
 });
 const mapStateToProps = (decks, ownProps) => {

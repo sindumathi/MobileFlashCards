@@ -22,20 +22,14 @@ const ShowQuestionButton = ({ onPress }) => {
 
 const CorrectButton = ({ onPress }) => {
   return (
-    <TouchableOpacity
-      style={[styles.submitButton, styles.correctButton]}
-      onPress={onPress}
-    >
+    <TouchableOpacity onPress={onPress}>
       <Text style={styles.submitButtonText}>Correct</Text>
     </TouchableOpacity>
   );
 };
 const InCorrectButton = ({ onPress }) => {
   return (
-    <TouchableOpacity
-      style={[styles.submitButton, styles.inCorrectButton]}
-      onPress={onPress}
-    >
+    <TouchableOpacity onPress={onPress}>
       <Text style={styles.submitButtonText}>Incorrect</Text>
     </TouchableOpacity>
   );
@@ -57,19 +51,28 @@ class Quiz extends Component {
 
   handleQuestionAnswer = (answer) => {
     console.log('answer' + answer);
+    this.setState({ showAnswer: false });
     const cardEmpty =
       this.state.currentQuestion === this.props.questions.length;
     if (answer === 'correct') {
-      console.log('answer' + answer);
-      this.setState(() => {
-        correctAnswer: this.state.correctAnswer + 1;
-      });
-      if (!cardEmpty) {
-        this.setState({ currentQuestion: this.state.currentQuestion + 1 });
-      } else {
-        this.setState({ quizComplete: true });
-      }
+      console.log('answer' + answer + 'state ans' + this.state.correctAnswer);
+      this.setState({ correctAnswer: this.state.correctAnswer + 1 });
     }
+    if (!cardEmpty) {
+      this.setState({ currentQuestion: this.state.currentQuestion + 1 });
+    } else {
+      this.setState({ quizComplete: true });
+    }
+  };
+
+  handleStateReset = () => {
+    this.setState({
+      currentQuestion: 0,
+      questionAnswered: false,
+      showAnswer: false,
+      correctAnswer: 0,
+      quizComplete: false,
+    });
   };
 
   render() {
@@ -80,60 +83,71 @@ class Quiz extends Component {
     const displayQuestion = questions[currentQuestion];
     const quizComplete =
       this.state.currentQuestion === this.props.questions.length;
+    console.log(quizComplete);
+
     return quizComplete ? (
       <View style={{ flex: 1 }}>
-        <Results correctAnswer={correctAnswer} totalQuestions={totalCards} />
+        <Results
+          correctAnswer={correctAnswer}
+          totalQuestions={totalCards}
+          id={deck.id}
+          reset={this.handleStateReset}
+        />
       </View>
     ) : (
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
         <View style={styles.headerPanel}>
           <View style={styles.headerTextContainer}>
             <Text style={styles.headerText}>Quiz Time!</Text>
             <Text style={styles.countText}>
-              {currentQuestion + 1} / {totalCards}
+              {currentQuestion + 1} / {totalCards} cards
             </Text>
           </View>
         </View>
         <View style={styles.card}>
-          {showAnswer === false ? (
-            <View>
-              <Text>Questions</Text>
-              <Text>{displayQuestion.question}</Text>
+          <View style={styles.quizContainer}>
+            <Text style={styles.contentHeader}>Question:</Text>
+            <Text style={styles.quizText}>{displayQuestion.question}</Text>
+            {!showAnswer && (
               <View style={styles.submitButtonContainer}>
                 <ShowAnswerButton onPress={this.toggleQuestionAnswer} />
               </View>
-            </View>
-          ) : (
-            <View>
-              <Text>Answers</Text>
-              <Text>{displayQuestion.answer}</Text>
-              <View style={styles.submitButtonContainer}>
-                <ShowQuestionButton onPress={this.toggleQuestionAnswer} />
+            )}
+          </View>
+
+          {showAnswer && (
+            <View style={styles.answerContainer}>
+              <Text style={styles.contentHeader}>Answer:</Text>
+              <Text style={styles.quizText}>{displayQuestion.answer}</Text>
+              <Text style={styles.contentHeader}> Your answer is</Text>
+              <View style={styles.buttonContainer}>
+                <View style={styles.correctButton}>
+                  <CorrectButton
+                    onPress={() => {
+                      this.handleQuestionAnswer('correct');
+                    }}
+                  />
+                </View>
+                <View style={styles.inCorrectButton}>
+                  <InCorrectButton
+                    onPress={() => {
+                      this.handleQuestionAnswer('incorrect');
+                    }}
+                  />
+                </View>
               </View>
             </View>
           )}
-          <View>
-            <View style={styles.submitButtonContainer}>
-              <CorrectButton
-                onPress={() => {
-                  this.handleQuestionAnswer('correct');
-                }}
-              />
-            </View>
-            <View style={styles.submitButtonContainer}>
-              <InCorrectButton
-                onPress={() => {
-                  this.handleQuestionAnswer('incorrect');
-                }}
-              />
-            </View>
-          </View>
         </View>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
   headerPanel: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -147,16 +161,37 @@ const styles = StyleSheet.create({
   headerTextContainer: {
     flex: 1,
     flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerText: {
     color: white,
     fontSize: 32,
   },
+
   countText: {
+    alignItems: 'center',
     marginTop: 24,
     fontSize: 26,
     color: white,
   },
+  card: {
+    padding: 20,
+  },
+  contentHeader: {
+    fontSize: 24,
+    color: brown,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    padding: 10,
+  },
+  quizText: {
+    color: brown,
+    fontSize: 20,
+    padding: 10,
+    textAlign: 'center',
+  },
+
   submitButtonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -174,11 +209,28 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: 'center',
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
   correctButton: {
     backgroundColor: green,
+    padding: 10,
+    borderRadius: 5,
+    height: 45,
+    flexBasis: '40%',
+    flexGrow: 0,
+    marginRight: 10,
   },
   inCorrectButton: {
     backgroundColor: red,
+    padding: 10,
+    borderRadius: 5,
+    height: 45,
+    flexBasis: '40%',
+    flexGrow: 0,
   },
 });
 

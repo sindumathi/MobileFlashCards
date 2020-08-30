@@ -1,25 +1,34 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useRef } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+} from 'react-native';
 import { connect } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { yellow, brown, white } from '../utils/colors';
 
 const Deck = (props) => {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
   const { deck, totalCards } = props;
   const navigation = useNavigation();
-  function check() {
-    console.log('Inside navigation deck');
-    console.log(navigation);
-    console.log('Inside navigation deck----------------------');
-  }
+  const animateNavigateDeck = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 100,
+      useNativeDriver: true,
+    }).start(() => navigation.navigate('DeckView', { id: deck.id }));
+  };
   return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('DeckView', { id: deck.id })}
-    >
+    <TouchableOpacity onPress={animateNavigateDeck} key={deck.id}>
       <View style={styles.cardContainer}>
-        <Text style={styles.cardTitle}>{deck.title}</Text>
-        <Text style={styles.cardDate}>Posted on {deck.created}</Text>
-        <Text style={styles.totalCards}>{totalCards} flash cards.</Text>
+        <View style={styles.contentContainer}>
+          <Text style={styles.cardTitle}>{deck.title}</Text>
+          <Text style={styles.cardDate}>Posted on {deck.created}</Text>
+          <Text style={styles.totalCards}>{totalCards} flash cards.</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -33,19 +42,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
   },
+  contentContainer: {
+    padding: 20,
+  },
   cardTitle: {
-    fontSize: 22,
-    padding: 10,
+    fontSize: 28,
     color: white,
   },
   cardDate: {
-    fontSize: 14,
-    fontStyle: 'italic',
+    fontSize: 12,
     color: white,
   },
   totalCards: {
     color: white,
-    fontSize: 18,
+    fontSize: 22,
   },
 });
 const mapStateToProps = (decks, ownProps) => {
