@@ -2,7 +2,6 @@ import { AsyncStorage } from 'react-native';
 import { formatDecksResults, FLASH_CARDS_KEY } from './_data';
 
 export function getDecks() {
-  AsyncStorage.clear();
   return AsyncStorage.getItem(FLASH_CARDS_KEY).then(formatDecksResults);
 }
 
