@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 
-const NOTIFICATION_KEY = 'FlashCards:notifications';
+const NOTIFICATION_KEY = 'FlashCardApp:notifications';
 
 //generates id using the deck input
 export function generateID(id) {
@@ -15,23 +15,7 @@ export function generateID(id) {
     .join('');
 }
 
-function createNotification() {
-  return {
-    title: 'Reminder FlashCards',
-    body: 'Dont forget to do some flash cards today',
-    ios: {
-      sound: true,
-    },
-    android: {
-      sound: true,
-      priority: 'high',
-      sticky: false,
-      vibrate: true,
-    },
-  };
-}
-
-export function cancelLocalNotification() {
+export function clearLocalNotification() {
   return AsyncStorage.removeItem(NOTIFICATION_KEY).then(
     Notifications.cancelAllScheduledNotificationsAsync
   );
@@ -42,22 +26,37 @@ export function setLocalNotification() {
     .then(JSON.parse)
     .then((data) => {
       if (data === null) {
-        Permissions.askAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
-          if (status === 'granted') {
-            Notifications.cancelAllScheduledNotificationsAsync();
+        Permissions.askAsync(Permissions.NOTIFICATIONS).then(
+          async ({ status }) => {
+            if (status === 'granted') {
+              Notifications.cancelAllScheduledNotificationsAsync();
 
-            let tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            tomorrow.setHours(17);
-            tomorrow.setMinutes(0);
+              let tomorrow = new Date();
+              tomorrow.setDate(tomorrow.getDate() + 1);
+              tomorrow.setHours(8);
+              tomorrow.setMinutes(0);
+              //To test Notification
+              //tomorrow.setSeconds(tomorrow.getSeconds() + 5);
+              Notifications.scheduleNotificationAsync({
+                content: {
+                  title: "Let's practice some flash cards today",
+                  body: "👋 You didn't practice any flashcards today",
+                },
+                trigger: { seconds: (tomorrow.getTime() - Date.now()) / 1000 },
+              });
+              Notifications.setNotificationHandler({
+                handleNotification: async () => ({
+                  shouldShowAlert: true,
+                  shouldPlaySound: true,
+                  shouldSetBadge: true,
+                }),
+              });
 
-            Notifications.scheduleLocalNotificationAsync(createNotification(), {
-              time: tomorrow,
-              repeat: 'day',
-            });
-            AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
+              AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
+            } else {
+            }
           }
-        });
+        );
       }
     });
 }

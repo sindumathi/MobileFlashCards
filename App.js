@@ -21,6 +21,7 @@ import DeckView from './components/DeckView';
 import Quiz from './components/Quiz';
 import EmptyCard from './components/EmptyCard';
 import Results from './components/Results';
+import { setLocalNotification } from './utils/helpers';
 
 const Stack = createStackNavigator();
 
@@ -60,6 +61,9 @@ const Home = () => {
 };
 
 class App extends Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
   store = createStore(reducer, middleware);
   render() {
     return (

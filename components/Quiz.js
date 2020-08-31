@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { yellow, brown, white, green, red } from '../utils/colors';
 import Results from './Results';
+import { setLocalNotification, clearLocalNotification } from '../utils/helpers';
 
 const ShowAnswerButton = ({ onPress }) => {
   return (
@@ -38,6 +39,7 @@ const InCorrectButton = ({ onPress }) => {
 //Controlled Component: displays single question.
 //User can check their answer is correct or not
 //Added: check end of flash cards and redirect to results page
+//when user attempts quiz for the day notification is cleared and set for next day.
 
 class Quiz extends Component {
   state = {
@@ -47,6 +49,9 @@ class Quiz extends Component {
     correctAnswer: 0,
     quizComplete: false,
   };
+  componentDidMount() {
+    clearLocalNotification().then(setLocalNotification);
+  }
   toggleQuestionAnswer = () => {
     this.setState({
       showAnswer: !this.state.showAnswer,
