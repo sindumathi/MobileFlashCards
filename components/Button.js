@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { Text, TouchableOpacity } from 'react-native';
 import { Styles } from './Styles';
 
 export const YellowButton = ({ onPress, buttonName }) => {

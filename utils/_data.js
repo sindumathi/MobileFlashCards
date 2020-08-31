@@ -2,27 +2,28 @@ import { AsyncStorage } from 'react-native';
 export const FLASH_CARDS_KEY = 'MobileFlashCards:Decks';
 
 const data = {
-  CapitalCities: {
-    id: 'CapitalCities',
-    title: 'Capital Cities',
+  KidsMathsQuiz: {
+    id: 'KidsMathsQuiz',
+    title: 'Kids Maths Quiz',
     timestamp: 1563796800,
-    created: '2019-07-22',
+    created: '2020-08-25',
     questions: [
       {
-        question: 'What is the capital of Canada?',
-        answer: 'Ottawa',
+        question: 'What is 53+28?',
+        answer: '81',
       },
       {
-        question: 'What is the capital of China?',
-        answer: 'Beijing',
+        question: 'which is greater 599 or 595?',
+        answer: '599',
       },
       {
-        question: 'What is the capital of Poland?',
-        answer: 'Warsaw',
+        question: 'which is smallest three digit number?',
+        answer: '100',
       },
       {
-        question: 'What is the capital of Germany?',
-        answer: 'Berlin',
+        question:
+          'If you split a pizza into two parts how will you represent in fraction?',
+        answer: '1/2',
       },
     ],
   },

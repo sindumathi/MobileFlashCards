@@ -1,7 +1,8 @@
 import { AsyncStorage } from 'react-native';
-import { Notifications, Permissions } from 'expo';
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
 
-const NOTIFICATION_KEY = 'MobileFlashCards:notifications';
+const NOTIFICATION_KEY = 'FlashCards:notifications';
 
 export function generateID(id) {
   return id
@@ -13,26 +14,26 @@ export function generateID(id) {
     .join('');
 }
 
-export function clearLocalNotification() {
-  return AsyncStorage.removeItem(NOTIFICATION_KEY).then(
-    Notifications.cancelAllScheduledNotificationsAsync
-  );
-}
-
 function createNotification() {
   return {
-    title: 'Reminder to study!',
-    body: '⏰ Don`t forget to read today!!!',
+    title: 'Reminder FlashCards',
+    body: 'Dont forget to do some flash cards today',
     ios: {
       sound: true,
     },
     android: {
       sound: true,
-      vibrate: true,
       priority: 'high',
       sticky: false,
+      vibrate: true,
     },
   };
+}
+
+export function cancelLocalNotification() {
+  return AsyncStorage.removeItem(NOTIFICATION_KEY).then(
+    Notifications.cancelAllScheduledNotificationsAsync
+  );
 }
 
 export function setLocalNotification() {
@@ -46,14 +47,13 @@ export function setLocalNotification() {
 
             let tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + 1);
-            tomorrow.setHours(20);
+            tomorrow.setHours(17);
             tomorrow.setMinutes(0);
 
             Notifications.scheduleLocalNotificationAsync(createNotification(), {
               time: tomorrow,
               repeat: 'day',
             });
-
             AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
           }
         });

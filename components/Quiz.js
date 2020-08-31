@@ -50,12 +50,10 @@ class Quiz extends Component {
   };
 
   handleQuestionAnswer = (answer) => {
-    console.log('answer' + answer);
     this.setState({ showAnswer: false });
     const cardEmpty =
       this.state.currentQuestion === this.props.questions.length;
     if (answer === 'correct') {
-      console.log('answer' + answer + 'state ans' + this.state.correctAnswer);
       this.setState({ correctAnswer: this.state.correctAnswer + 1 });
     }
     if (!cardEmpty) {
@@ -77,13 +75,10 @@ class Quiz extends Component {
 
   render() {
     const { currentQuestion, correctAnswer, showAnswer } = this.state;
-    console.log('================showanswer');
-    console.log(showAnswer);
     const { totalCards, deck, questions } = this.props;
     const displayQuestion = questions[currentQuestion];
     const quizComplete =
       this.state.currentQuestion === this.props.questions.length;
-    console.log(quizComplete);
 
     return quizComplete ? (
       <View style={{ flex: 1 }}>
@@ -236,12 +231,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (decks, ownProps) => {
   const { deckId } = ownProps.route.params;
-
-  console.log(ownProps);
   const deck = decks[deckId];
-  console.log(deck);
   const totalCards = (deck && deck.questions && deck.questions.length) || 0;
-  console.log(totalCards);
   const questions = deck.questions;
   return {
     deck,

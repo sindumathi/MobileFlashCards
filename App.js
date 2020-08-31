@@ -19,11 +19,8 @@ import Deck from './components/Deck';
 import AddDeck from './components/AddDeck';
 import DeckView from './components/DeckView';
 import Quiz from './components/Quiz';
+import EmptyCard from './components/EmptyCard';
 import Results from './components/Results';
-import { getDecks } from './utils/api';
-import { receiveDecks } from './actions';
-
-const Tab = createBottomTabNavigator();
 
 const Stack = createStackNavigator();
 
@@ -35,6 +32,7 @@ function DeckStatusBar({ backgroundColor, ...props }) {
   );
 }
 const Home = () => {
+  const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -63,14 +61,6 @@ const Home = () => {
 
 class App extends Component {
   store = createStore(reducer, middleware);
-  async componentDidMount() {
-    const { dispatch } = this.props;
-
-    Promise.all([getDecks()]).then((data) => {
-      const decks = data[0];
-      this.store.dispatch(receiveDecks(decks));
-    });
-  }
   render() {
     return (
       <NavigationContainer>
@@ -83,6 +73,7 @@ class App extends Component {
             <Stack.Screen name='AddCard' component={AddCard} />
             <Stack.Screen name='Quiz' component={Quiz} />
             <Stack.Screen name='Results' component={Results} />
+            <Stack.Screen name='EmptyCard' component={EmptyCard} />
           </Stack.Navigator>
         </Provider>
       </NavigationContainer>

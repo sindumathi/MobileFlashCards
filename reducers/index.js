@@ -3,11 +3,11 @@ import { ADD_CARD, ADD_DECK, RECEIVE_DECKS } from '../actions';
 export default function decks(state = {}, action) {
   switch (action.type) {
     case ADD_CARD:
-      const { deckId, question, answer } = action.questions;
+      const { deckId, question, answer, created, timestamp } = action.questions;
       return {
         ...state,
         [deckId]: {
-          title: state[deckId].title,
+          ...state[deckId],
           questions: state[deckId].questions.concat({
             question: question,
             answer: answer,

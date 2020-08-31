@@ -5,50 +5,38 @@ import { brown, green } from '../utils/colors';
 import { useNavigation } from '@react-navigation/native';
 import { YellowButton } from './Button';
 
-const Results = (props) => {
+const EmptyCard = (props) => {
   const navigation = useNavigation();
-
-  const { correctAnswer, totalQuestions, percentage, id, reset } = props;
-  function handlePlayAgain() {
-    reset();
-    navigation.navigate('Quiz', { deckId: id });
-  }
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Image
-          source={require('../assets/headerResults.png')}
-          style={styles.headerImage}
-        />
-      </View>
       <Text style={styles.contentHeader}>
-        You have Completed your FlashCard Quiz
+        You dont have any card in this deck
       </Text>
-      <Text style={styles.quizText}>
-        You got {correctAnswer} out of {totalQuestions} correct
+      <Text style={styles.contentText}>
+        So please add cards to start the quiz.
       </Text>
-      <Text style={styles.percentText}>({percentage}%)</Text>
 
-      <Text style={styles.quizText}>What do you want to do?</Text>
-
+      <Text style={styles.contentText}>What do you want to do?</Text>
       <View style={styles.resultViewButton}>
-        <TouchableOpacity style={styles.submitButtonContainer}>
+        <View style={styles.submitButtonContainer}>
           <YellowButton
             onPress={() => {
-              handlePlayAgain();
+              navigation.navigate('AddCard', {
+                deckId: props.route.params.deckId,
+              });
             }}
-            buttonName={'Play Again'}
+            buttonName={'Add Card'}
           />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.submitButtonContainer}>
+        </View>
+        <View style={styles.submitButtonContainer}>
           <YellowButton
             onPress={() => {
               navigation.navigate('DeckIndex');
             }}
             buttonName={'Go To Deck'}
           />
-        </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -69,19 +57,13 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: 120,
   },
-  quizText: {
+  contentText: {
     color: brown,
     fontSize: 20,
     padding: 10,
     textAlign: 'center',
   },
-  percentText: {
-    color: green,
-    fontSize: 30,
-    padding: 10,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
+
   contentHeader: {
     fontSize: 24,
     color: brown,
@@ -101,14 +83,5 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
 });
-const mapStateToProps = (deck, ownProps) => {
-  const { correctAnswer, totalQuestions } = ownProps;
 
-  const percentage =
-    correctAnswer === 0
-      ? 0
-      : Math.round((correctAnswer / totalQuestions) * 100);
-  return { correctAnswer, totalQuestions, percentage };
-};
-
-export default connect(mapStateToProps)(Results);
+export default connect()(EmptyCard);

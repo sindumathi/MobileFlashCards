@@ -1,15 +1,14 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   KeyboardAvoidingView,
-  TouchableOpacity,
   TextInput,
   Image,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { yellow, brown, white, red } from '../utils/colors';
+import { brown, red } from '../utils/colors';
 
 import { addCard } from '../actions/index';
 import { addCardToDeck } from '../utils/api';
@@ -130,8 +129,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (decks, ownProps) => {
-  console.log('ownProps=============');
-  console.log(ownProps);
   const deckId = ownProps.route.params.deckId;
   const deck = decks[deckId];
   return { deck };

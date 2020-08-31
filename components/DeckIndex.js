@@ -3,25 +3,28 @@ import { receiveDecks } from '../actions';
 import { connect } from 'react-redux';
 import { getDecks } from '../utils/api';
 import Deck from './Deck';
-import PropTypes from 'prop-types';
 import {
   View,
-  Text,
   StyleSheet,
   ScrollView,
-  FlatList,
-  TouchableOpacity,
-  Animated,
+  SafeAreaView,
   Image,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { yellow, brown, white } from '../utils/colors';
+import { brown, white } from '../utils/colors';
 
 class DeckIndex extends Component {
+  async componentDidMount() {
+    const { dispatch } = this.props;
+    Promise.all([getDecks()]).then((data) => {
+      const decks = data[0];
+      dispatch(receiveDecks(decks));
+    });
+  }
   render() {
     const { decks, navigation } = this.props;
+
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <ScrollView>
           <View style={styles.headerContainer}>
             <Image
@@ -29,18 +32,11 @@ class DeckIndex extends Component {
               style={styles.headerImage}
             />
           </View>
-
-          {/*}  <FlatList
-          data={Object.keys(decks).map((id) => {
-            return { key: id };
-          })}
-          renderItem={({ item }) => <Deck key={item.key} id={item.key} />}
-        />*/}
           {Object.keys(decks).map((id) => {
             return <Deck key={id} id={id} />;
           })}
         </ScrollView>
-      </View>
+      </SafeAreaView>
     );
   }
 }

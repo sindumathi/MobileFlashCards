@@ -26,13 +26,27 @@ class AddDeck extends React.Component {
   state = { deckName: '', errorMessage: '' };
   onSubmit = () => {
     const { deckName } = this.state;
-    const { dispatch } = this.props;
+    const { dispatch, decks } = this.props;
     if (deckName === '') {
       this.setState({ errorMessage: "Deck name can't be empty" });
       return;
     }
     const deckId = generateID(deckName);
-    const deckInfo = { id: deckId, title: deckName.trim(), questions: [] };
+    const deckExists = Object.keys(decks).includes(deckId);
+    if (deckExists) {
+      this.setState({ errorMessage: 'Deck already exists' });
+      return;
+    }
+    const [month, date, year] = new Date().toLocaleDateString().split('/');
+    const created = `${year}-${month}-${date}`;
+    const deckInfo = {
+      id: deckId,
+      title: deckName.trim(),
+      questions: [],
+      timeStamp: Date.now(),
+      created,
+    };
+
     dispatch(addDeck(deckId, deckInfo));
     saveDeck(deckId, deckInfo);
     this.setState({ deckName: '', errorMessage: '' });
@@ -41,7 +55,6 @@ class AddDeck extends React.Component {
 
   render() {
     const { deckName, errorMessage } = this.state;
-    console.log(errorMessage);
     return (
       <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
         <View style={styles.container}>
@@ -125,5 +138,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
+const mapStateToProps = (decks) => {
+  return {
+    decks,
+  };
+};
 
-export default connect()(AddDeck);
+export default connect(mapStateToProps)(AddDeck);

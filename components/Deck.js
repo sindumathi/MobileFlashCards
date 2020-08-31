@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { yellow, brown, white } from '../utils/colors';
+import { brown, white } from '../utils/colors';
 
 const Deck = (props) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = (decks, ownProps) => {
   const deck = decks[ownProps.id];
   const totalCards = (deck && deck.questions && deck.questions.length) || 0;
-  console.log(deck);
   return {
     deck,
     totalCards,

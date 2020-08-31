@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { yellow, brown, white, blueGrey, indigo } from '../utils/colors';
+import { brown, white } from '../utils/colors';
 import { YellowButton } from './Button';
 
 class DeckView extends Component {
+  handleQuizSubmit = () => {
+    const { totalCards, id, navigation } = this.props;
+    totalCards === 0
+      ? navigation.navigate('EmptyCard', { deckId: id })
+      : navigation.navigate('Quiz', { deckId: id });
+  };
   render() {
     const { deck, totalCards, outputText, id, navigation } = this.props;
+
     return (
       <View style={styles.container}>
         <View style={styles.cardContainer}>
@@ -32,7 +39,7 @@ class DeckView extends Component {
           <TouchableOpacity style={styles.submitButtonContainer}>
             <YellowButton
               onPress={() => {
-                navigation.navigate('Quiz', { deckId: id });
+                this.handleQuizSubmit();
               }}
               buttonName={'Start Quiz'}
             />
@@ -84,7 +91,6 @@ const mapStateToProps = (decks, ownProps) => {
   const deck = decks[id];
   const totalCards = (deck && deck.questions && deck.questions.length) || 0;
   const outputText = totalCards > 1 ? 'flash cards' : 'flash card';
-  console.log(deck);
   return {
     deck,
     totalCards,
