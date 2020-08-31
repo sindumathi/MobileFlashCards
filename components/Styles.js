@@ -10,14 +10,7 @@ import {
 } from 'react-native';
 import { yellow, brown, white } from '../utils/colors';
 
-const YellowButton = ({ onPress, buttonName }) => {
-  return (
-    <TouchableOpacity style={styles.submitButton} onPress={onPress}>
-      <Text style={styles.submitButtonText}>{buttonName}</Text>
-    </TouchableOpacity>
-  );
-};
-
+//Styles for button
 export const Styles = StyleSheet.create({
   submitButtonContainer: {
     justifyContent: 'center',

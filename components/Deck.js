@@ -10,6 +10,10 @@ import { connect } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { brown, white } from '../utils/colors';
 
+//Deck displays the decks in decklist.
+//Animation is added to each deck press.
+// when individual deck is used it routes to deckview
+
 const Deck = (props) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const { deck, totalCards } = props;

@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { brown, white } from '../utils/colors';
 import { YellowButton } from './Button';
 
+//Individual deck view component: displays option to add card and start quiz.
+//If no flash cards routes to a page where user will be alerted to add new card
+
 class DeckView extends Component {
   handleQuizSubmit = () => {
     const { totalCards, id, navigation } = this.props;

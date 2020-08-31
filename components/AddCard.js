@@ -14,6 +14,11 @@ import { addCard } from '../actions/index';
 import { addCardToDeck } from '../utils/api';
 import { YellowButton } from './Button';
 
+//Controlled component: stores the question and answer in state
+//Update both Async storage and redux store.
+//validates both question and answer fields, it can't be empty.
+//After adding it redirects to its deck view.
+
 class AddCard extends Component {
   state = { question: '', answer: '', errorMessage: '' };
   onSubmit = () => {

@@ -35,6 +35,10 @@ const InCorrectButton = ({ onPress }) => {
   );
 };
 
+//Controlled Component: displays single question.
+//User can check their answer is correct or not
+//Added: check end of flash cards and redirect to results page
+
 class Quiz extends Component {
   state = {
     currentQuestion: 0,

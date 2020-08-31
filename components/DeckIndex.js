@@ -12,6 +12,9 @@ import {
 } from 'react-native';
 import { brown, white } from '../utils/colors';
 
+//Home component: It lists all the decks
+//Scroll view is added
+
 class DeckIndex extends Component {
   async componentDidMount() {
     const { dispatch } = this.props;

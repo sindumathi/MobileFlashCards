@@ -4,6 +4,7 @@ import * as Permissions from 'expo-permissions';
 
 const NOTIFICATION_KEY = 'FlashCards:notifications';
 
+//generates id using the deck input
 export function generateID(id) {
   return id
     .trim()

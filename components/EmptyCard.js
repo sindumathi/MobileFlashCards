@@ -5,6 +5,7 @@ import { brown, green } from '../utils/colors';
 import { useNavigation } from '@react-navigation/native';
 import { YellowButton } from './Button';
 
+//If no flash cards in the deck user is given option to add card or to go to decklist.
 const EmptyCard = (props) => {
   const navigation = useNavigation();
 

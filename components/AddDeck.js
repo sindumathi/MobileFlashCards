@@ -22,6 +22,12 @@ const DeckSubmitButton = ({ onPress }) => {
   );
 };
 
+//Controlled component: deck name is stored in state
+//Updates both Async storage and redux store
+//Validation:i) Deckname cant be empty
+//           ii) Deckname should be unique
+//After deck creation redirects to deck view
+
 class AddDeck extends React.Component {
   state = { deckName: '', errorMessage: '' };
   onSubmit = () => {

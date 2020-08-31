@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native';
 export const FLASH_CARDS_KEY = 'MobileFlashCards:Decks';
 
+//Initial data
 const data = {
   KidsMathsQuiz: {
     id: 'KidsMathsQuiz',
