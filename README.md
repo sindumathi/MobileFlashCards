@@ -1,5 +1,6 @@
 ## About Project
-Mobile Flash Card application is created using React native. Flash cards are easiest way to memorize things. So to practice for exams or to show kids, the user can able to create their own flashcards and organise the similar flash cards in the deck. And they can play as a quiz and  check whether answer is correct or not and at the end  quiz the user can check their progress.
+
+Mobile Flash Card application is created using React native. Flash cards are easiest way to memorize things. So to practice for exams or to show kids, the user can able to create their own flashcards and organise the similar flash cards in the deck. And they can play as a quiz and check whether answer is correct or not and at the end quiz the user can check their progress.
 
 ### Features added:
 
@@ -20,7 +21,7 @@ Mobile Flash Card application is created using React native. Flash cards are eas
 1.Setup project:
 
 ```bash
-$ git https://github.com/sindumathi/MobileFlashCards.git
+$ git clone https://github.com/sindumathi/MobileFlashCards.git
 $ cd MobileFlashCards
 $ npm install
 ```
@@ -29,15 +30,17 @@ $ npm install
 
 - npm start or expo start
 
-3.Then run the application in andriod device
+  3.Then run the application in andriod device by scanning QR code using expo / Simulator.
 
 ## ScreenShots
 
-  The screenshots to the application are added in the folder 'AppScreenshots' inside the project folder.
+The screenshots to the application are added in the folder 'AppScreenshots' inside the project folder.
 
 ## Platforms
 
-| Platform | Tested             | Notes                |
-| :------- | :----------------- | :------------------- |
-| iOS      | :No:               |                      |
-| Android  | :Yes:              | Android Version : 9  |
+This application is tested in Redmi 8
+
+| Platform | Tested | Notes               |
+| :------- | :----- | :------------------ |
+| iOS      | :No:   |                     |
+| Android  | :Yes:  | Android Version : 9 |

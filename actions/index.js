@@ -18,31 +18,8 @@ export function addDeck(deckId, deck) {
 }
 
 export function addCard(questions) {
-  console.log(questions);
   return {
     type: ADD_CARD,
     questions,
   };
 }
-/*
-export function handleAddDeck(deckId, deckInfo) {
-  const deck = { deckId, deckInfo };
-  return (dispatch) => {
-    return saveDeck(deckId, deckInfo).then((deck) => {
-      dispatch(addDeck(deck));
-    });
-  };
-}
-export function handleAddCard(questionAnswer) {
-  console.log('inside the handle add card------------------');
-  return (dispatch) => {
-    return saveCard(questionAnswer)
-      .then((questionAnswer) => {
-        dispatch(addCard(questionAnswer));
-      })
-      .catch((e) => {
-        console.warn('ERROR: Add card');
-        dispatch(addCard(questionAnswer));
-      });
-  };
-}*/

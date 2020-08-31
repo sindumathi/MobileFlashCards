@@ -40,7 +40,9 @@ class AddDeck extends React.Component {
     const deckId = generateID(deckName);
     const deckExists = Object.keys(decks).includes(deckId);
     if (deckExists) {
-      this.setState({ errorMessage: 'Deck already exists' });
+      this.setState({
+        errorMessage: 'Deck already exists. Please enter different name.',
+      });
       return;
     }
     const [month, date, year] = new Date().toLocaleDateString().split('/');

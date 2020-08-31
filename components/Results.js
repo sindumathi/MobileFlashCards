@@ -5,6 +5,8 @@ import { brown, green } from '../utils/colors';
 import { useNavigation } from '@react-navigation/native';
 import { YellowButton } from './Button';
 
+//Displays user results
+
 const Results = (props) => {
   const navigation = useNavigation();
 
@@ -28,7 +30,7 @@ const Results = (props) => {
       <Text style={styles.quizText}>
         You got {correctAnswer} out of {totalQuestions} correct
       </Text>
-      <Text style={styles.percentText}>({percentage}%)</Text>
+      <Text style={styles.percentText}>{percentage}%</Text>
 
       <Text style={styles.quizText}>What do you want to do?</Text>
 
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
   },
   percentText: {
     color: green,
-    fontSize: 30,
+    fontSize: 40,
     padding: 10,
     textAlign: 'center',
     fontWeight: 'bold',
